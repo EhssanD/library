@@ -84,11 +84,11 @@ export default /*public*/ /*final*/ class Detector {
     let bitMatrix = image.getBlackMatrix();
 
     let barcodeCoordinates = Detector.detect(multiple, bitMatrix);
-    if (!barcodeCoordinates.length) {
-      bitMatrix = bitMatrix.clone();
-      bitMatrix.rotate180();
-      barcodeCoordinates = Detector.detect(multiple, bitMatrix);
-    }
+//     if (!barcodeCoordinates.length) {
+//       bitMatrix = bitMatrix.clone();
+//       bitMatrix.rotate180();
+//       barcodeCoordinates = Detector.detect(multiple, bitMatrix);
+//     }
     return new PDF417DetectorResult(bitMatrix, barcodeCoordinates);
   }
 
