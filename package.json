@@ -39,13 +39,13 @@
     "url": "https://github.com/zxing-js/library"
   },
   "homepage": "https://zxing-js.github.io/library/",
-  "private": false,
-  "main": "./cjs/index.js",
-  "module": "./esm/index.js",
-  "typings": "./esm/index.d.ts",
-  "esnext": "./es2015/index.js",
-  "browser": "./umd/index.js",
-  "browser:min": "./umd/index.min.js",
+  "private": true,
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "typings": "./dist/esm/index.d.ts",
+  "esnext": "./dist/es2015/index.js",
+  "browser": "./dist/umd/index.js",
+  "browser:min": "./dist/umd/index.min.js",
   "scripts": {
     "lint": "yarn tslint --project .",
     "clean": "yarn shx rm -rf dist output",
@@ -62,7 +62,8 @@
     "build:copy": "cp README.md dist && cp package.json dist && cp LICENSE dist",
     "shx": "./node_modules/.bin/shx",
     "tsc": "./node_modules/.bin/tsc",
-    "tslint": "./node_modules/.bin/tslint \"./src/**/*.ts\""
+    "tslint": "./node_modules/.bin/tslint \"./src/**/*.ts\"",
+    "postinstall": "yarn build"
   },
   "dependencies": {
     "ts-custom-error": "^3.0.0"
