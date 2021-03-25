@@ -48,12 +48,12 @@
   "browser:min": "./dist/umd/index.min.js",
   "scripts": {
     "lint": "yarn tslint --project .",
-    "clean": "yarn shx rm -rf dist output",
+    "clean": "rm -rf dist output",
     "test": "yarn test:build && yarn test:run",
     "test:build": "tsc --build tsconfig.test.json",
     "test:run": "mocha -r tsconfig-paths/register --timeout 200000 output/tests/**/*.spec.js",
     "cover": "nyc --reporter=lcov --reporter=text yarn test",
-    "build": "yarn build:es2015 && yarn build:esm && yarn build:cjs && yarn build:umd && yarn build:umd:min && yarn build:copy",
+    "build": "yarn clean && yarn build:es2015 && yarn build:esm && yarn build:cjs && yarn build:umd && yarn build:umd:min && yarn build:copy",
     "build:es2015": "tsc --build tsconfig.lib-es2015.json",
     "build:esm": "tsc --build tsconfig.lib-esm.json",
     "build:cjs": "tsc --build tsconfig.lib-cjs.json",
@@ -62,8 +62,7 @@
     "build:copy": "cp README.md dist && cp package.json dist && cp LICENSE dist",
     "shx": "./node_modules/.bin/shx",
     "tsc": "./node_modules/.bin/tsc",
-    "tslint": "./node_modules/.bin/tslint \"./src/**/*.ts\"",
-    "postinstall": "yarn build:cjs"
+    "tslint": "./node_modules/.bin/tslint \"./src/**/*.ts\""
   },
   "dependencies": {
     "ts-custom-error": "^3.0.0"
