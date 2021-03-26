@@ -110,6 +110,7 @@ var PDF417Reader = /** @class */ (function () {
         var results = new Array();
         var detectorResult = Detector_1.default.detectMultiple(image, hints, multiple);
         try {
+            // throw 'Found';
             for (var _b = __values(detectorResult.getPoints()), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var points = _c.value;
                 var decoderResult = PDF417ScanningDecoder_1.default.decode(detectorResult.getBits(), points[4], points[5], points[6], points[7], PDF417Reader.getMinCodewordWidth(points), PDF417Reader.getMaxCodewordWidth(points));

@@ -46,17 +46,16 @@ var NotFoundException_1 = require("../NotFoundException");
  * @author dswitkin@google.com (Daniel Switkin)
  * @author Sean Owen
  */
-var GlobalHistogramBinarizer = /** @class */ (function (_super) {
-    __extends(GlobalHistogramBinarizer, _super);
-    function GlobalHistogramBinarizer(source) {
-        var _this = _super.call(this, source) || this;
-        _this.luminances = GlobalHistogramBinarizer.EMPTY;
-        _this.buckets = new Int32Array(GlobalHistogramBinarizer.LUMINANCE_BUCKETS);
-        return _this;
+var DummyBinarizer = /** @class */ (function (_super) {
+    __extends(DummyBinarizer, _super);
+    function DummyBinarizer(source) {
+        return _super.call(this, source) || this;
+        // this.luminances = DummyBinarizer.EMPTY;
+        // this.buckets = new Int32Array(DummyBinarizer.LUMINANCE_BUCKETS);
     }
     // Applies simple sharpening to the row data to improve performance of the 1D Readers.
     /*@Override*/
-    GlobalHistogramBinarizer.prototype.getBlackRow = function (y /*int*/, row) {
+    DummyBinarizer.prototype.getBlackRow = function (y /*int*/, row) {
         var source = this.getLuminanceSource();
         var width = source.getWidth();
         if (row === undefined || row === null || row.getSize() < width) {
@@ -69,9 +68,9 @@ var GlobalHistogramBinarizer = /** @class */ (function (_super) {
         var localLuminances = source.getRow(y, this.luminances);
         var localBuckets = this.buckets;
         for (var x = 0; x < width; x++) {
-            localBuckets[(localLuminances[x] & 0xff) >> GlobalHistogramBinarizer.LUMINANCE_SHIFT]++;
+            localBuckets[(localLuminances[x] & 0xff) >> DummyBinarizer.LUMINANCE_SHIFT]++;
         }
-        var blackPoint = GlobalHistogramBinarizer.estimateBlackPoint(localBuckets);
+        var blackPoint = DummyBinarizer.estimateBlackPoint(localBuckets);
         if (width < 3) {
             // Special case for very small images
             for (var x = 0; x < width; x++) {
@@ -97,25 +96,25 @@ var GlobalHistogramBinarizer = /** @class */ (function (_super) {
     };
     // Does not sharpen the data, as this call is intended to only be used by 2D Readers.
     /*@Override*/
-    GlobalHistogramBinarizer.prototype.getBlackMatrix = function () {
+    DummyBinarizer.prototype.getBlackMatrix = function () {
         var source = this.getLuminanceSource();
         var width = source.getWidth();
         var height = source.getHeight();
         var matrix = new BitMatrix_1.default(width, height);
         // Quickly calculates the histogram by sampling four rows from the image. This proved to be
         // more robust on the blackbox tests than sampling a diagonal as we used to do.
-        this.initArrays(width);
-        var localBuckets = this.buckets;
-        for (var y = 1; y < 5; y++) {
-            var row = Math.floor((height * y) / 5);
-            var localLuminances_1 = source.getRow(row, this.luminances);
-            var right = Math.floor((width * 4) / 5);
-            for (var x = Math.floor(width / 5); x < right; x++) {
-                var pixel = localLuminances_1[x] & 0xff;
-                localBuckets[pixel >> GlobalHistogramBinarizer.LUMINANCE_SHIFT]++;
-            }
-        }
-        var blackPoint = GlobalHistogramBinarizer.estimateBlackPoint(localBuckets);
+        // this.initArrays(width);
+        // const localBuckets = this.buckets;
+        // for (let y = 1; y < 5; y++) {
+        //     const row = Math.floor((height * y) / 5);
+        //     const localLuminances = source.getRow(row, this.luminances);
+        //     const right = Math.floor((width * 4) / 5);
+        //     for (let x = Math.floor(width / 5); x < right; x++) {
+        //         const pixel = localLuminances[x] & 0xff;
+        //         localBuckets[pixel >> DummyBinarizer.LUMINANCE_SHIFT]++;
+        //     }
+        // }
+        var blackPoint = 1; //DummyBinarizer.estimateBlackPoint(localBuckets);
         // We delay reading the entire image luminance until the black point estimation succeeds.
         // Although we end up reading four rows twice, it is consistent with our motto of
         // "fail quickly" which is necessary for continuous scanning.
@@ -132,19 +131,19 @@ var GlobalHistogramBinarizer = /** @class */ (function (_super) {
         return matrix;
     };
     /*@Override*/
-    GlobalHistogramBinarizer.prototype.createBinarizer = function (source) {
-        return new GlobalHistogramBinarizer(source);
+    DummyBinarizer.prototype.createBinarizer = function (source) {
+        return new DummyBinarizer(source);
     };
-    GlobalHistogramBinarizer.prototype.initArrays = function (luminanceSize /*int*/) {
+    DummyBinarizer.prototype.initArrays = function (luminanceSize /*int*/) {
         if (this.luminances.length < luminanceSize) {
             this.luminances = new Uint8ClampedArray(luminanceSize);
         }
         var buckets = this.buckets;
-        for (var x = 0; x < GlobalHistogramBinarizer.LUMINANCE_BUCKETS; x++) {
+        for (var x = 0; x < DummyBinarizer.LUMINANCE_BUCKETS; x++) {
             buckets[x] = 0;
         }
     };
-    GlobalHistogramBinarizer.estimateBlackPoint = function (buckets) {
+    DummyBinarizer.estimateBlackPoint = function (buckets) {
         // Find the tallest peak in the histogram.
         var numBuckets = buckets.length;
         var maxBucketCount = 0;
@@ -193,13 +192,13 @@ var GlobalHistogramBinarizer = /** @class */ (function (_super) {
                 bestValleyScore = score;
             }
         }
-        return bestValley << GlobalHistogramBinarizer.LUMINANCE_SHIFT;
+        return bestValley << DummyBinarizer.LUMINANCE_SHIFT;
     };
-    GlobalHistogramBinarizer.LUMINANCE_BITS = 5;
-    GlobalHistogramBinarizer.LUMINANCE_SHIFT = 8 - GlobalHistogramBinarizer.LUMINANCE_BITS;
-    GlobalHistogramBinarizer.LUMINANCE_BUCKETS = 1 << GlobalHistogramBinarizer.LUMINANCE_BITS;
-    GlobalHistogramBinarizer.EMPTY = Uint8ClampedArray.from([0]);
-    return GlobalHistogramBinarizer;
+    DummyBinarizer.LUMINANCE_BITS = 5;
+    DummyBinarizer.LUMINANCE_SHIFT = 8 - DummyBinarizer.LUMINANCE_BITS;
+    DummyBinarizer.LUMINANCE_BUCKETS = 1 << DummyBinarizer.LUMINANCE_BITS;
+    DummyBinarizer.EMPTY = Uint8ClampedArray.from([0]);
+    return DummyBinarizer;
 }(Binarizer_1.default));
-exports.default = GlobalHistogramBinarizer;
-//# sourceMappingURL=GlobalHistogramBinarizer.js.map
+exports.default = DummyBinarizer;
+//# sourceMappingURL=DummyBinarizer.js.map

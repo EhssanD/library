@@ -7,9 +7,11 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.GenericGF = exports.WhiteRectangleDetector = exports.MathUtils = exports.StringUtils = exports.PerspectiveTransform = exports.HybridBinarizer = exports.GridSamplerInstance = exports.GridSampler = exports.DummyBinarizer = exports.GlobalHistogramBinarizer = exports.EncodeHintType = exports.DetectorResult = exports.DefaultGridSampler = exports.DecoderResult = exports.CharacterSetECI = exports.BitSource = exports.BitMatrix = exports.BitArray = exports.ZXingInteger = exports.ZXingStandardCharsets = exports.ZXingArrays = exports.ZXingCharset = exports.ZXingStringEncoding = exports.ZXingStringBuilder = exports.ZXingSystem = exports.ResultPoint = exports.RGBLuminanceSource = exports.ResultMetadataType = exports.Result = exports.PlanarYUVLuminanceSource = exports.MultiFormatWriter = exports.MultiFormatReader = exports.LuminanceSource = exports.InvertedLuminanceSource = exports.DecodeHintType = exports.BinaryBitmap = exports.Binarizer = exports.BarcodeFormat = exports.WriterException = exports.UnsupportedOperationException = exports.ReedSolomonException = exports.ReaderException = exports.NotFoundException = exports.IllegalStateException = exports.IllegalArgumentException = exports.FormatException = exports.Exception = exports.ChecksumException = exports.ArithmeticException = exports.ArgumentException = void 0;
+exports.MultiFormatOneDReader = exports.RSSExpandedReader = exports.RSS14Reader = exports.Code39Reader = exports.ITFReader = exports.Code128Reader = exports.EAN13Reader = exports.OneDReader = exports.AztecPoint = exports.AztecDetector = exports.AztecDecoder = exports.AztecCode = exports.AztecHighLevelEncoder = exports.AztecEncoder = exports.AztecDetectorResult = exports.AztecCodeWriter = exports.AztecCodeReader = exports.QRCodeMaskUtil = exports.QRCodeByteMatrix = exports.QRCodeMatrixUtil = exports.QRCodeEncoderQRCode = exports.QRCodeEncoder = exports.QRCodeDataMask = exports.QRCodeDecodedBitStreamParser = exports.QRCodeMode = exports.QRCodeVersion = exports.QRCodeDecoderFormatInformation = exports.QRCodeDecoderErrorCorrectionLevel = exports.QRCodeWriter = exports.QRCodeReader = exports.PDF417Detector = exports.PDF417DecoderErrorCorrection = exports.PDF417DecodedBitStreamParser = exports.PDF417ResultMetadata = exports.PDF417Reader = exports.DataMatrixDecodedBitStreamParser = exports.DataMatrixReader = exports.ReedSolomonEncoder = exports.ReedSolomonDecoder = exports.GenericGFPoly = void 0;
 __exportStar(require("./browser"), exports);
 // Exceptions
 var ArgumentException_1 = require("./core/ArgumentException");
@@ -97,6 +99,8 @@ var EncodeHintType_1 = require("./core/EncodeHintType");
 Object.defineProperty(exports, "EncodeHintType", { enumerable: true, get: function () { return EncodeHintType_1.default; } });
 var GlobalHistogramBinarizer_1 = require("./core/common/GlobalHistogramBinarizer");
 Object.defineProperty(exports, "GlobalHistogramBinarizer", { enumerable: true, get: function () { return GlobalHistogramBinarizer_1.default; } });
+var DummyBinarizer_1 = require("./core/common/DummyBinarizer");
+Object.defineProperty(exports, "DummyBinarizer", { enumerable: true, get: function () { return DummyBinarizer_1.default; } });
 var GridSampler_1 = require("./core/common/GridSampler");
 Object.defineProperty(exports, "GridSampler", { enumerable: true, get: function () { return GridSampler_1.default; } });
 var GridSamplerInstance_1 = require("./core/common/GridSamplerInstance");

@@ -118,6 +118,7 @@ export default /*public final*/ class PDF417ScanningDecoder {
       if (detectionResult == null) {
         throw NotFoundException.getNotFoundInstance();
       }
+      throw "Found";
       let resultBox: BoundingBox = detectionResult.getBoundingBox();
       if (firstPass && resultBox != null &&
         (resultBox.getMinY() < boundingBox.getMinY() || resultBox.getMaxY() > boundingBox.getMaxY())) {
@@ -185,6 +186,7 @@ export default /*public final*/ class PDF417ScanningDecoder {
     if (barcodeMetadata == null) {
       return null;
     }
+    // throw "Found";
     let boundingBox: BoundingBox = BoundingBox.merge(PDF417ScanningDecoder.adjustBoundingBox(leftRowIndicatorColumn),
       PDF417ScanningDecoder.adjustBoundingBox(rightRowIndicatorColumn));
     return new DetectionResult(barcodeMetadata, boundingBox);

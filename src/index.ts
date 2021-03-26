@@ -51,6 +51,7 @@ export { default as DefaultGridSampler } from './core/common/DefaultGridSampler'
 export { default as DetectorResult } from './core/common/DetectorResult';
 export { default as EncodeHintType } from './core/EncodeHintType';
 export { default as GlobalHistogramBinarizer } from './core/common/GlobalHistogramBinarizer';
+export { default as DummyBinarizer } from './core/common/DummyBinarizer';
 export { default as GridSampler } from './core/common/GridSampler';
 export { default as GridSamplerInstance } from './core/common/GridSamplerInstance';
 export { default as HybridBinarizer } from './core/common/HybridBinarizer';

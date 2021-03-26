@@ -114,6 +114,7 @@ export default /*public final*/ class PDF417Reader implements Reader, MultipleBa
   private static decode(image: BinaryBitmap, hints: Map<DecodeHintType, any>, multiple: boolean) {
     const results = new Array<Result>();
     const detectorResult = Detector.detectMultiple(image, hints, multiple);
+    // throw 'Found';
     for (const points of detectorResult.getPoints()) {
       const decoderResult = PDF417ScanningDecoder.decode(detectorResult.getBits(), points[4], points[5],
         points[6], points[7], PDF417Reader.getMinCodewordWidth(points), PDF417Reader.getMaxCodewordWidth(points));

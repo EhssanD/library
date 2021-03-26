@@ -102,6 +102,7 @@ var PDF417ScanningDecoder = /** @class */ (function () {
             if (detectionResult == null) {
                 throw NotFoundException_1.default.getNotFoundInstance();
             }
+            throw "Found";
             var resultBox = detectionResult.getBoundingBox();
             if (firstPass && resultBox != null &&
                 (resultBox.getMinY() < boundingBox.getMinY() || resultBox.getMaxY() > boundingBox.getMaxY())) {
@@ -167,6 +168,7 @@ var PDF417ScanningDecoder = /** @class */ (function () {
         if (barcodeMetadata == null) {
             return null;
         }
+        // throw "Found";
         var boundingBox = BoundingBox_1.default.merge(PDF417ScanningDecoder.adjustBoundingBox(leftRowIndicatorColumn), PDF417ScanningDecoder.adjustBoundingBox(rightRowIndicatorColumn));
         return new DetectionResult_1.default(barcodeMetadata, boundingBox);
     };

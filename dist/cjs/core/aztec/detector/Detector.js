@@ -55,7 +55,7 @@ var Detector = /** @class */ (function () {
             0xee0,
             0x1dc,
             0x83b,
-            0x707,
+            0x707, // 03407 .XX X.. ... XXX
         ]);
         this.image = image;
     }

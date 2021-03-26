@@ -63,8 +63,8 @@ export default /*public*/ /*final*/ class Detector {
   private static /*final*/ SKIPPED_ROW_COUNT_MAX: /*int*/ number = 25;
   // A PDF471 barcode should have at least 3 rows, with each row being >= 3 times the module width. Therefore it should be at least
   // 9 pixels tall. To be conservative, we use about half the size to ensure we don't miss it.
-  private static /*final*/ ROW_STEP: /*int*/ number = 5;
-  private static /*final*/ BARCODE_MIN_HEIGHT: /*int*/ number = 10;
+  private static /*final*/ ROW_STEP: /*int*/ number = 20;
+  private static /*final*/ BARCODE_MIN_HEIGHT: /*int*/ number = 20;
 
   /**
    * <p>Detects a PDF417 Code in an image. Only checks 0 and 180 degree rotations.</p>
@@ -82,7 +82,7 @@ export default /*public*/ /*final*/ class Detector {
     // boolean tryHarder = hints != null && hints.containsKey(DecodeHintType.TRY_HARDER);
 
     let bitMatrix = image.getBlackMatrix();
-
+    // throw "Found";
     let barcodeCoordinates = Detector.detect(multiple, bitMatrix);
 //     if (!barcodeCoordinates.length) {
 //       bitMatrix = bitMatrix.clone();

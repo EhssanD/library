@@ -62,6 +62,7 @@ var Detector = /** @class */ (function () {
         // different binarizers
         // boolean tryHarder = hints != null && hints.containsKey(DecodeHintType.TRY_HARDER);
         var bitMatrix = image.getBlackMatrix();
+        // throw "Found";
         var barcodeCoordinates = Detector.detect(multiple, bitMatrix);
         //     if (!barcodeCoordinates.length) {
         //       bitMatrix = bitMatrix.clone();
@@ -332,8 +333,8 @@ var Detector = /** @class */ (function () {
     Detector.SKIPPED_ROW_COUNT_MAX = 25;
     // A PDF471 barcode should have at least 3 rows, with each row being >= 3 times the module width. Therefore it should be at least
     // 9 pixels tall. To be conservative, we use about half the size to ensure we don't miss it.
-    Detector.ROW_STEP = 5;
-    Detector.BARCODE_MIN_HEIGHT = 10;
+    Detector.ROW_STEP = 20;
+    Detector.BARCODE_MIN_HEIGHT = 20;
     return Detector;
 }());
 exports.default = Detector;
