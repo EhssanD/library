@@ -1,19 +1,19 @@
 "use strict";
 /*
-* Copyright 2013 ZXing authors
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Copyright 2013 ZXing authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
@@ -102,10 +102,12 @@ var PDF417ScanningDecoder = /** @class */ (function () {
             if (detectionResult == null) {
                 throw NotFoundException_1.default.getNotFoundInstance();
             }
-            throw "Found";
+            // throw "Found";
             var resultBox = detectionResult.getBoundingBox();
-            if (firstPass && resultBox != null &&
-                (resultBox.getMinY() < boundingBox.getMinY() || resultBox.getMaxY() > boundingBox.getMaxY())) {
+            if (firstPass &&
+                resultBox != null &&
+                (resultBox.getMinY() < boundingBox.getMinY() ||
+                    resultBox.getMaxY() > boundingBox.getMaxY())) {
                 boundingBox = resultBox;
             }
             else {
@@ -118,8 +120,11 @@ var PDF417ScanningDecoder = /** @class */ (function () {
         detectionResult.setDetectionResultColumn(maxBarcodeColumn, rightRowIndicatorColumn);
         var leftToRight = leftRowIndicatorColumn != null;
         for (var barcodeColumnCount /*int*/ = 1; barcodeColumnCount <= maxBarcodeColumn; barcodeColumnCount++) {
-            var barcodeColumn = leftToRight ? barcodeColumnCount : maxBarcodeColumn - barcodeColumnCount;
-            if (detectionResult.getDetectionResultColumn(barcodeColumn) !== /* null */ undefined) {
+            var barcodeColumn = leftToRight
+                ? barcodeColumnCount
+                : maxBarcodeColumn - barcodeColumnCount;
+            if (detectionResult.getDetectionResultColumn(barcodeColumn) !==
+                /* null */ undefined) {
                 // This will be the case for the opposite row indicator column, which doesn't need to be decoded again.
                 continue;
             }
@@ -219,7 +224,9 @@ var PDF417ScanningDecoder = /** @class */ (function () {
         for (var row /*int*/ = codewords.length - 1; missingEndRows > 0 && codewords[row] == null; row--) {
             missingEndRows--;
         }
-        return rowIndicatorColumn.getBoundingBox().addMissingRows(missingStartRows, missingEndRows, rowIndicatorColumn.isLeft());
+        return rowIndicatorColumn
+            .getBoundingBox()
+            .addMissingRows(missingStartRows, missingEndRows, rowIndicatorColumn.isLeft());
     };
     PDF417ScanningDecoder.getMax = function (values) {
         var e_2, _a;
@@ -242,16 +249,22 @@ var PDF417ScanningDecoder = /** @class */ (function () {
     PDF417ScanningDecoder.getBarcodeMetadata = function (leftRowIndicatorColumn, rightRowIndicatorColumn) {
         var leftBarcodeMetadata;
         if (leftRowIndicatorColumn == null ||
-            (leftBarcodeMetadata = leftRowIndicatorColumn.getBarcodeMetadata()) == null) {
-            return rightRowIndicatorColumn == null ? null : rightRowIndicatorColumn.getBarcodeMetadata();
+            (leftBarcodeMetadata = leftRowIndicatorColumn.getBarcodeMetadata()) ==
+                null) {
+            return rightRowIndicatorColumn == null
+                ? null
+                : rightRowIndicatorColumn.getBarcodeMetadata();
         }
         var rightBarcodeMetadata;
         if (rightRowIndicatorColumn == null ||
-            (rightBarcodeMetadata = rightRowIndicatorColumn.getBarcodeMetadata()) == null) {
+            (rightBarcodeMetadata = rightRowIndicatorColumn.getBarcodeMetadata()) ==
+                null) {
             return leftBarcodeMetadata;
         }
-        if (leftBarcodeMetadata.getColumnCount() !== rightBarcodeMetadata.getColumnCount() &&
-            leftBarcodeMetadata.getErrorCorrectionLevel() !== rightBarcodeMetadata.getErrorCorrectionLevel() &&
+        if (leftBarcodeMetadata.getColumnCount() !==
+            rightBarcodeMetadata.getColumnCount() &&
+            leftBarcodeMetadata.getErrorCorrectionLevel() !==
+                rightBarcodeMetadata.getErrorCorrectionLevel() &&
             leftBarcodeMetadata.getRowCount() !== rightBarcodeMetadata.getRowCount()) {
             return null;
         }
@@ -262,8 +275,7 @@ var PDF417ScanningDecoder = /** @class */ (function () {
         for (var i /*int*/ = 0; i < 2; i++) {
             var increment = i === 0 ? 1 : -1;
             var startColumn = Math.trunc(Math.trunc(startPoint.getX()));
-            for (var imageRow /*int*/ = Math.trunc(Math.trunc(startPoint.getY())); imageRow <= boundingBox.getMaxY() &&
-                imageRow >= boundingBox.getMinY(); imageRow += increment) {
+            for (var imageRow /*int*/ = Math.trunc(Math.trunc(startPoint.getY())); imageRow <= boundingBox.getMaxY() && imageRow >= boundingBox.getMinY(); imageRow += increment) {
                 var codeword = PDF417ScanningDecoder.detectCodeword(image, 0, image.getWidth(), leftToRight, startColumn, imageRow, minCodewordWidth, maxCodewordWidth);
                 if (codeword != null) {
                     rowIndicatorColumn.setCodeword(imageRow, codeword);
@@ -295,7 +307,8 @@ var PDF417ScanningDecoder = /** @class */ (function () {
             detectionResult.getBarcodeRowCount() -
             PDF417ScanningDecoder.getNumberOfECCodeWords(detectionResult.getBarcodeECLevel());
         if (numberOfCodewords.length === 0) {
-            if (calculatedNumberOfCodewords < 1 || calculatedNumberOfCodewords > PDF417Common_1.default.MAX_CODEWORDS_IN_BARCODE) {
+            if (calculatedNumberOfCodewords < 1 ||
+                calculatedNumberOfCodewords > PDF417Common_1.default.MAX_CODEWORDS_IN_BARCODE) {
                 throw NotFoundException_1.default.getNotFoundInstance();
             }
             barcodeMatrix01.setValue(calculatedNumberOfCodewords);
@@ -317,7 +330,8 @@ var PDF417ScanningDecoder = /** @class */ (function () {
         var barcodeMatrix = PDF417ScanningDecoder.createBarcodeMatrix(detectionResult);
         PDF417ScanningDecoder.adjustCodewordCount(detectionResult, barcodeMatrix);
         var erasures /*Collection<Integer>*/ = new Array();
-        var codewords = new Int32Array(detectionResult.getBarcodeRowCount() * detectionResult.getBarcodeColumnCount());
+        var codewords = new Int32Array(detectionResult.getBarcodeRowCount() *
+            detectionResult.getBarcodeColumnCount());
         var ambiguousIndexValuesList = /*List<int[]>*/ [];
         var ambiguousIndexesList = /*Collection<Integer>*/ new Array();
         for (var row /*int*/ = 0; row < detectionResult.getBarcodeRowCount(); row++) {
@@ -363,7 +377,8 @@ var PDF417ScanningDecoder = /** @class */ (function () {
         var tries = 100;
         while (tries-- > 0) {
             for (var i /*int*/ = 0; i < ambiguousIndexCount.length; i++) {
-                codewords[ambiguousIndexes[i]] = ambiguousIndexValues[i][ambiguousIndexCount[i]];
+                codewords[ambiguousIndexes[i]] =
+                    ambiguousIndexValues[i][ambiguousIndexCount[i]];
             }
             try {
                 return PDF417ScanningDecoder.decodeCodewords(codewords, ecLevel, erasureArray);
@@ -443,24 +458,31 @@ var PDF417ScanningDecoder = /** @class */ (function () {
         return barcodeMatrix;
     };
     PDF417ScanningDecoder.isValidBarcodeColumn = function (detectionResult, barcodeColumn) {
-        return barcodeColumn >= 0 && barcodeColumn <= detectionResult.getBarcodeColumnCount() + 1;
+        return (barcodeColumn >= 0 &&
+            barcodeColumn <= detectionResult.getBarcodeColumnCount() + 1);
     };
     PDF417ScanningDecoder.getStartColumn = function (detectionResult, barcodeColumn, imageRow, leftToRight) {
         var e_5, _a;
         var offset = leftToRight ? 1 : -1;
         var codeword = null;
         if (PDF417ScanningDecoder.isValidBarcodeColumn(detectionResult, barcodeColumn - offset)) {
-            codeword = detectionResult.getDetectionResultColumn(barcodeColumn - offset).getCodeword(imageRow);
+            codeword = detectionResult
+                .getDetectionResultColumn(barcodeColumn - offset)
+                .getCodeword(imageRow);
         }
         if (codeword != null) {
             return leftToRight ? codeword.getEndX() : codeword.getStartX();
         }
-        codeword = detectionResult.getDetectionResultColumn(barcodeColumn).getCodewordNearby(imageRow);
+        codeword = detectionResult
+            .getDetectionResultColumn(barcodeColumn)
+            .getCodewordNearby(imageRow);
         if (codeword != null) {
             return leftToRight ? codeword.getStartX() : codeword.getEndX();
         }
         if (PDF417ScanningDecoder.isValidBarcodeColumn(detectionResult, barcodeColumn - offset)) {
-            codeword = detectionResult.getDetectionResultColumn(barcodeColumn - offset).getCodewordNearby(imageRow);
+            codeword = detectionResult
+                .getDetectionResultColumn(barcodeColumn - offset)
+                .getCodewordNearby(imageRow);
         }
         if (codeword != null) {
             return leftToRight ? codeword.getEndX() : codeword.getStartX();
@@ -469,13 +491,17 @@ var PDF417ScanningDecoder = /** @class */ (function () {
         while (PDF417ScanningDecoder.isValidBarcodeColumn(detectionResult, barcodeColumn - offset)) {
             barcodeColumn -= offset;
             try {
-                for (var _b = (e_5 = void 0, __values(detectionResult.getDetectionResultColumn(barcodeColumn).getCodewords())), _c = _b.next(); !_c.done; _c = _b.next()) {
+                for (var _b = (e_5 = void 0, __values(detectionResult
+                    .getDetectionResultColumn(barcodeColumn)
+                    .getCodewords())), _c = _b.next(); !_c.done; _c = _b.next()) {
                     var previousRowCodeword = _c.value /*Codeword*/;
                     if (previousRowCodeword != null) {
-                        return (leftToRight ? previousRowCodeword.getEndX() : previousRowCodeword.getStartX()) +
+                        return ((leftToRight
+                            ? previousRowCodeword.getEndX()
+                            : previousRowCodeword.getStartX()) +
                             offset *
                                 skippedColumns *
-                                (previousRowCodeword.getEndX() - previousRowCodeword.getStartX());
+                                (previousRowCodeword.getEndX() - previousRowCodeword.getStartX()));
                     }
                 }
             }
@@ -488,7 +514,9 @@ var PDF417ScanningDecoder = /** @class */ (function () {
             }
             skippedColumns++;
         }
-        return leftToRight ? detectionResult.getBoundingBox().getMinX() : detectionResult.getBoundingBox().getMaxX();
+        return leftToRight
+            ? detectionResult.getBoundingBox().getMinX()
+            : detectionResult.getBoundingBox().getMaxX();
     };
     PDF417ScanningDecoder.detectCodeword = function (image, minColumn, maxColumn, leftToRight, startColumn, imageRow, minCodewordWidth, maxCodewordWidth) {
         startColumn = PDF417ScanningDecoder.adjustCodewordStartColumn(image, minColumn, maxColumn, leftToRight, startColumn, imageRow);
@@ -557,7 +585,7 @@ var PDF417ScanningDecoder = /** @class */ (function () {
             }
         }
         if (moduleNumber === moduleBitCount.length ||
-            ((imageColumn === (leftToRight ? maxColumn : minColumn)) &&
+            (imageColumn === (leftToRight ? maxColumn : minColumn) &&
                 moduleNumber === moduleBitCount.length - 1)) {
             return moduleBitCount;
         }
@@ -571,9 +599,12 @@ var PDF417ScanningDecoder = /** @class */ (function () {
         var increment = leftToRight ? -1 : 1;
         // there should be no black pixels before the start column. If there are, then we need to start earlier.
         for (var i /*int*/ = 0; i < 2; i++) {
-            while ((leftToRight ? correctedStartColumn >= minColumn : correctedStartColumn < maxColumn) &&
+            while ((leftToRight
+                ? correctedStartColumn >= minColumn
+                : correctedStartColumn < maxColumn) &&
                 leftToRight === image.get(correctedStartColumn, imageRow)) {
-                if (Math.abs(codewordStartColumn - correctedStartColumn) > PDF417ScanningDecoder.CODEWORD_SKEW_SIZE) {
+                if (Math.abs(codewordStartColumn - correctedStartColumn) >
+                    PDF417ScanningDecoder.CODEWORD_SKEW_SIZE) {
                     return codewordStartColumn;
                 }
                 correctedStartColumn += increment;
@@ -584,8 +615,10 @@ var PDF417ScanningDecoder = /** @class */ (function () {
         return correctedStartColumn;
     };
     PDF417ScanningDecoder.checkCodewordSkew = function (codewordSize, minCodewordWidth, maxCodewordWidth) {
-        return minCodewordWidth - PDF417ScanningDecoder.CODEWORD_SKEW_SIZE <= codewordSize &&
-            codewordSize <= maxCodewordWidth + PDF417ScanningDecoder.CODEWORD_SKEW_SIZE;
+        return (minCodewordWidth - PDF417ScanningDecoder.CODEWORD_SKEW_SIZE <=
+            codewordSize &&
+            codewordSize <=
+                maxCodewordWidth + PDF417ScanningDecoder.CODEWORD_SKEW_SIZE);
     };
     /**
      * @throws FormatException,
@@ -614,8 +647,9 @@ var PDF417ScanningDecoder = /** @class */ (function () {
      * @throws ChecksumException if error correction fails
      */
     PDF417ScanningDecoder.correctErrors = function (codewords, erasures, numECCodewords) {
-        if (erasures != null &&
-            erasures.length > numECCodewords / 2 + PDF417ScanningDecoder.MAX_ERRORS ||
+        if ((erasures != null &&
+            erasures.length >
+                numECCodewords / 2 + PDF417ScanningDecoder.MAX_ERRORS) ||
             numECCodewords < 0 ||
             numECCodewords > PDF417ScanningDecoder.MAX_EC_CODEWORDS) {
             // Too many errors or EC Codewords is corrupted
@@ -677,7 +711,12 @@ var PDF417ScanningDecoder = /** @class */ (function () {
         return PDF417ScanningDecoder.getCodewordBucketNumber(PDF417ScanningDecoder.getBitCountForCodeword(codeword));
     };
     PDF417ScanningDecoder.getCodewordBucketNumber_Int32Array = function (moduleBitCount) {
-        return (moduleBitCount[0] - moduleBitCount[2] + moduleBitCount[4] - moduleBitCount[6] + 9) % 9;
+        return ((moduleBitCount[0] -
+            moduleBitCount[2] +
+            moduleBitCount[4] -
+            moduleBitCount[6] +
+            9) %
+            9);
     };
     PDF417ScanningDecoder.toString = function (barcodeMatrix) {
         var formatter = new Formatter_1.default();

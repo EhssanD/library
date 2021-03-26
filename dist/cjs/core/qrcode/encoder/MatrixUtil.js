@@ -402,7 +402,7 @@ var MatrixUtil = /** @class */ (function () {
         Int32Array.from([6, 28, 54, 80, 106, 132, 158]),
         Int32Array.from([6, 32, 58, 84, 110, 136, 162]),
         Int32Array.from([6, 26, 54, 82, 110, 138, 166]),
-        Int32Array.from([6, 30, 58, 86, 114, 142, 170]), // Version 40
+        Int32Array.from([6, 30, 58, 86, 114, 142, 170]),
     ]);
     // Type info cells at the left top corner.
     MatrixUtil.TYPE_INFO_COORDINATES = Array.from([
